@@ -1,1 +1,1 @@
-import '$lib/styles/main.css';
+import '$lib/styles/main.scss';

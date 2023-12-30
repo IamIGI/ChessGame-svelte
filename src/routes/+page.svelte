@@ -87,15 +87,21 @@ function colorBoard(i: number) {
     } else {
         return 'beige'
     }
-    
   }
+}
+
+function colorPieces(i: number) {
+	if(i <= 15) return 'black'
+	if(i >= 48) return 'white'
+	return ''
+	// throw new Error('Bad index provided')
 }
 
 </script>
 
  <div id="gameboard">
-    {#each startPieces as startPiece, i}
-        <div class={`square ${colorBoard(i)}`} id={`square-id-${i}`}><svelte:component this={startPiece} /></div>
+     {#each startPieces as startPiece, i}
+        <div class={`square ${colorBoard(i)}`} id={`square-id-${i}`}><svelte:component  this={startPiece} {...{color:  colorPieces(i)}} /></div>
     {/each}
  </div>
     <p>It is <span id="player"></span> go.</p>
