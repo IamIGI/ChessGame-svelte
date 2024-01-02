@@ -75,8 +75,12 @@
 		Rook
 	];
 
+	const width = 8;
+	let playerTurn = 'black';
+	let infoMessage = '';
+
 	onMount(() => {
-		const allSquares = document.querySelectorAll('#gameboard .square');
+		const allSquares = document.querySelectorAll('.square');
 
 		allSquares.forEach((square) => {
 			square.addEventListener('dragstart', dragStart);
@@ -99,12 +103,72 @@
 
 	function dragDrop(e: Event) {
 		e.stopPropagation();
-		// this will work only if something exists in target element
-		(<HTMLElement>(<HTMLElement>e.target).parentNode).append(draggedElement);
-		(<HTMLElement>e.target).remove(); // remove old piece
 
-		// on empty square
-		// e.target.append(draggedElement);
+		const correctPlayerTurn = draggedElement.firstChild.classList.contains(playerTurn);
+		const takenPiece = (<HTMLElement>e.target).classList.contains('piece');
+		const valid = checkIfValid(e.target as HTMLElement);
+		const opponentPlayerTurn = playerTurn === 'white' ? 'black' : 'white';
+		const takenPieceByOpponent =
+			(<HTMLElement>(<HTMLElement>e.target).firstChild).classList &&
+			(<HTMLElement>(<HTMLElement>e.target).firstChild).classList.contains(opponentPlayerTurn);
+
+		if (correctPlayerTurn) {
+			if (takenPieceByOpponent && valid) {
+				(<HTMLElement>(<HTMLElement>e.target).parentNode).append(draggedElement);
+				(<HTMLElement>e.target).remove(); // remove old piece
+				changePlayer();
+				return;
+			}
+
+			if (takenPiece && !takenPieceByOpponent) {
+				infoMessage = 'you cannot go here!';
+				setTimeout(() => (infoMessage = ''), 2000);
+				return;
+			}
+
+			if (valid) {
+				(<HTMLElement>e.target).append(draggedElement);
+				changePlayer();
+				return;
+			}
+		}
+	}
+
+	function changePlayer() {
+		if (playerTurn === 'black') {
+			playerTurn = 'white';
+			reverseIds();
+		} else {
+			revertIds();
+			playerTurn = 'black';
+		}
+	}
+
+	function reverseIds() {
+		const allSquares = document.querySelectorAll('.square');
+		allSquares.forEach((square, i) => {
+			square.setAttribute('square-id', (width * width - 1 - i).toString());
+		});
+	}
+
+	function revertIds() {
+		const allSquares = document.querySelectorAll('.square');
+		allSquares.forEach((square, i) => {
+			square.setAttribute('square-id', i.toString());
+		});
+	}
+
+	function checkIfValid(target: HTMLElement) {
+		const targetId =
+			Number(target.getAttribute('square-id')) ||
+			Number((<HTMLElement>target.parentNode).getAttribute('square-id'));
+
+		const startId = Number(startPositionId);
+		const piece = draggedElement.id;
+		console.log('targetId', targetId);
+		console.log('startId', startId);
+		console.log('piece', piece);
+		return true; //change later
 	}
 </script>
 
@@ -115,8 +179,8 @@
 		</div>
 	{/each}
 </div>
-<p>It is <span id="player"></span> go.</p>
-<p id="info-display"></p>
+<p>It is <span id="player">{playerTurn}</span>'s go.</p>
+<p id="info-display">{infoMessage}</p>
 
 <style>
 </style>
