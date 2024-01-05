@@ -8,7 +8,7 @@
 	import { onMount } from 'svelte';
 	import colorsUtil from '$lib/utils/colors.util';
 
-	const startPieces: (ConstructorOfATypedSvelteComponent | null)[] = [
+	const startPieces: (ConstructorOfATypedSvelteComponent | undefined)[] = [
 		Rook,
 		Knight,
 		Bishop,
@@ -25,38 +25,38 @@
 		Pawn,
 		Pawn,
 		Pawn,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
+		undefined,
 		Pawn,
 		Pawn,
 		Pawn,
@@ -165,10 +165,36 @@
 
 		const startId = Number(startPositionId);
 		const piece = draggedElement.id;
-		console.log('targetId', targetId);
-		console.log('startId', startId);
-		console.log('piece', piece);
-		return true; //change later
+		// console.log('targetId', targetId);
+		// console.log('startId', startId);
+		// console.log('piece', piece);
+		console.log(target.classList[0]);
+
+		switch (piece) {
+			case 'pawn':
+				const starterRow = [8, 9, 10, 11, 12, 13, 14, 15];
+
+				//pawn moves forward
+				if (
+					(starterRow.includes(startId) && startId + width * 2 === targetId) ||
+					(startId + width === targetId && target.classList[0] === 'square')
+				) {
+					console.log('here');
+					return true;
+				}
+
+				//pawn moves diagonally (need opponent on square to do it)
+				if (
+					(startId + width - 1 === targetId && target.classList[0] === 'piece') ||
+					(startId + width + 1 === targetId && target.classList[0] === 'piece')
+				) {
+					return true;
+				}
+				break;
+
+			default:
+				break;
+		}
 	}
 </script>
 
