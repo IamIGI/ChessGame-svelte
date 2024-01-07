@@ -165,10 +165,6 @@
 
 		const startId = Number(startPositionId);
 		const piece = draggedElement.id;
-		// console.log('targetId', targetId);
-		// console.log('startId', startId);
-		// console.log('piece', piece);
-		console.log(target.classList[0]);
 
 		switch (piece) {
 			case 'pawn':
@@ -178,22 +174,1532 @@
 				if (
 					(starterRow.includes(startId) && startId + width * 2 === targetId) ||
 					(startId + width === targetId && target.classList[0] === 'square')
-				) {
-					console.log('here');
+				)
 					return true;
-				}
 
 				//pawn moves diagonally (need opponent on square to do it)
 				if (
 					(startId + width - 1 === targetId && target.classList[0] === 'piece') ||
 					(startId + width + 1 === targetId && target.classList[0] === 'piece')
+				)
+					return true;
+				return false;
+			case 'knight':
+				if (
+					startId + width * 2 - 1 === targetId ||
+					startId + width * 2 + 1 === targetId ||
+					startId + width - 2 === targetId ||
+					startId + width + 2 === targetId ||
+					startId - width * 2 - 1 === targetId ||
+					startId - width * 2 + 1 === targetId ||
+					startId - width - 2 === targetId ||
+					startId - width + 2 === targetId
 				) {
 					return true;
 				}
 				break;
-
-			default:
+			case 'bishop':
+				if (
+					startId + width + 1 === targetId ||
+					(startId + width * 2 + 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 3 + 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 4 + 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 5 + 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 6 + 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 7 + 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 6 + 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					//--
+					startId - width - 1 === targetId ||
+					(startId - width * 2 - 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 3 - 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 4 - 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 5 - 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 6 - 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 7 - 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 6 - 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// backward --
+					startId - width + 1 === targetId ||
+					(startId - width * 2 + 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 3 + 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 4 + 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 5 + 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 6 + 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 7 + 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 6 + 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// backwards ++
+					startId + width - 1 === targetId ||
+					(startId + width * 2 - 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 3 - 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 4 - 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 5 - 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 6 - 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 7 - 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 6 - 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						))
+				)
+					return true;
 				break;
+			case 'rook':
+				if (
+					// up direction
+					startId + width === targetId ||
+					(startId + width * 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// - down direction
+					startId - width === targetId ||
+					(startId - width * 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// right direction
+					startId + 1 === targetId ||
+					(startId + 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 6}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					// left direction
+					startId - 1 === targetId ||
+					(startId - 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 6}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						))
+				)
+					return true;
+				return false;
+			case 'queen':
+				if (
+					// bishop moves
+					startId + width + 1 === targetId ||
+					(startId + width * 2 + 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 3 + 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 4 + 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 5 + 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 6 + 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 7 + 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 6 + 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					//--
+					startId - width - 1 === targetId ||
+					(startId - width * 2 - 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 3 - 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 4 - 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 5 - 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 6 - 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 7 - 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 6 - 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// backward --
+					startId - width + 1 === targetId ||
+					(startId - width * 2 + 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 3 + 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 4 + 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 5 + 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 6 + 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 7 + 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width + 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2 + 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3 + 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4 + 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5 + 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 6 + 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// backwards ++
+					startId + width - 1 === targetId ||
+					(startId + width * 2 - 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 3 - 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 4 - 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 5 - 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 6 - 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 7 - 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width - 1}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2 - 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3 - 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4 - 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5 - 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 6 - 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// rock moves
+					// up direction
+					startId + width === targetId ||
+					(startId + width * 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId + width * 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + width * 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// - down direction
+					startId - width === targetId ||
+					(startId - width * 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					(startId - width * 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 2}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 3}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 4}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 5}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - width * 6}"]`))
+								.lastElementChild?.classList[0] === 'piece'
+						)) ||
+					// right direction
+					startId + 1 === targetId ||
+					(startId + 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId + 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId + 6}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					// left direction
+					startId - 1 === targetId ||
+					(startId - 2 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 3 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 4 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 5 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 6 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						)) ||
+					(startId - 7 === targetId &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 1}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 2}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 3}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 4}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 5}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						) &&
+						!(
+							(<HTMLElement>document.querySelector(`[square-id="${startId - 6}"]`)).lastElementChild
+								?.classList[0] === 'piece'
+						))
+				)
+					return true;
+				return false;
+			case 'king':
+				if (
+					startId + 1 === targetId ||
+					startId - 1 === targetId ||
+					startId + width === targetId ||
+					startId - width === targetId ||
+					startId + width - 1 === targetId ||
+					startId + width + 1 === targetId ||
+					startId - width - 1 === targetId ||
+					startId - width + 1 === targetId
+				)
+					return true;
+				return false;
+			default:
+				return false;
 		}
 	}
 </script>
