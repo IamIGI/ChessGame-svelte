@@ -116,6 +116,7 @@
 			if (takenPieceByOpponent && valid) {
 				(<HTMLElement>(<HTMLElement>e.target).parentNode).append(draggedElement);
 				(<HTMLElement>e.target).remove(); // remove old piece
+				checkForWin();
 				changePlayer();
 				return;
 			}
@@ -128,6 +129,7 @@
 
 			if (valid) {
 				(<HTMLElement>e.target).append(draggedElement);
+				checkForWin();
 				changePlayer();
 				return;
 			}
@@ -1700,6 +1702,27 @@
 				return false;
 			default:
 				return false;
+		}
+	}
+
+	function checkForWin() {
+		const kings = Array.from(document.querySelectorAll('#king'));
+
+		function disableDrag() {
+			const allSquares = document.querySelectorAll('.square');
+			allSquares.forEach((square) =>
+				(square.firstChild as Element).setAttribute('draggable', 'false')
+			);
+		}
+
+		if (!kings.some((king) => (king.firstChild as Element).classList.contains('white'))) {
+			infoMessage = 'Black player win!';
+			disableDrag();
+		}
+
+		if (!kings.some((king) => (king.firstChild as Element).classList.contains('black'))) {
+			infoMessage = 'White player win!';
+			disableDrag();
 		}
 	}
 </script>
